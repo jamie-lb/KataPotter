@@ -1,65 +1,79 @@
 package store;
 
 import books.Book;
+import books.BookSet;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookStore {
 
-    public static final double fullBookPrice = 8;
-
     public double purchaseBooks(List<Book> books) {
-        double discountAmount = getTotalDiscount(books);
-        return fullBookPrice * books.size() - discountAmount;
-    }
-
-    private double getTotalDiscount(List<Book> books) {
-        List<Book> originalList = new ArrayList<Book>(books);
-        double discountAmount = 0;
-        while (originalList.size() > 1){
-            List<Book> distinctBooks = getDistinctBooks(originalList);
-            discountAmount += getQuantityDiscount(distinctBooks.size());
-            for (Book book : distinctBooks){
-                int duplicate = originalList.indexOf(book);
-                originalList.remove(duplicate);
-            }
+        double price = 0;
+        List<BookSet> bookSets = createBookSets(books);
+        if (bookSetsAreUnbalanced(bookSets))
+            bookSets = balanceSets(bookSets);
+        for (BookSet bookSet : bookSets){
+            price += bookSet.getSetPrice();
         }
-        double alternateDiscount = getAlternateDiscount(books);
-        return alternateDiscount > discountAmount
-                ? alternateDiscount
-                : discountAmount;
+        return price;
     }
 
-    private double getAlternateDiscount(List<Book> books){
-        List<Book> originalList = new ArrayList<Book>(books);
-        int numberOfSets = 0;
-        int maxDistinctCount = 0;
-        while (originalList.size() > 1){
-            List<Book> distinctBooks = getDistinctBooks(originalList);
-            int currentDistinctCount = distinctBooks.size();
-            if (currentDistinctCount > maxDistinctCount) maxDistinctCount = currentDistinctCount;
-            for (Book book : distinctBooks){
-                int duplicate = originalList.indexOf(book);
-                originalList.remove(duplicate);
+    private boolean bookSetsAreUnbalanced(List<BookSet> bookSets) {
+        if (bookSets.size() == 1){
+            return false;
+        } else if (bookSets.size() == 2){
+            BookSet first = bookSets.get(0);
+            BookSet second = bookSets.get(1);
+            if (first.size() < 5 && second.size() < 5){
+                return false;
+            } else{
+                return Math.abs(first.size() - second.size()) >= 2;
             }
-            numberOfSets += 1;
-        }
-        return numberOfSets == 0
-        ? 0
-        : getAlternateDiscountAmount(books.size(), numberOfSets);
-    }
-
-    private double getAlternateDiscountAmount(int bookCount, int numberOfSets){
-        int averageCount = bookCount / numberOfSets;
-        double averageDiscountAmount = 0;
-        if (bookCount < averageCount * numberOfSets){
-            averageDiscountAmount += getQuantityDiscount(averageCount) * (numberOfSets - 1);
-            averageDiscountAmount += getQuantityDiscount(averageCount - 1);
         } else{
-            averageDiscountAmount += getQuantityDiscount(averageCount) * numberOfSets;
+            return true;
         }
-        return averageDiscountAmount;
+    }
+
+    private List<BookSet> balanceSets(List<BookSet> bookSets) {
+        for (int i = 0; i <= bookSets.size() - 2; i++){
+            BookSet first = bookSets.get(i);
+            int firstSize = first.size();
+            for (int j = i + 1; j <= bookSets.size() - 1; j++){
+                BookSet second = bookSets.get(j);
+                int secondSize = second.size() + 1;
+                if (firstSize > secondSize){
+                    moveBooks(first, second);
+                    break;
+                }
+            }
+        }
+        return bookSets;
+    }
+
+    private void moveBooks(BookSet first, BookSet second) {
+        for (int i = 1; i <= 5; i++){
+            Book book = new Book(i);
+            if (first.containsBook(book) && !second.containsBook(book)){
+                first.removeBook(book);
+                second.addBook(book);
+                break;
+            }
+        }
+    }
+
+    private List<BookSet> createBookSets(List<Book> books) {
+        List<BookSet> sets = new ArrayList<BookSet>();
+        while (books.size() > 0){
+            BookSet bookSet = new BookSet();
+            List<Book> distinctBooks = getDistinctBooks(books);
+            for (Book book : distinctBooks){
+                bookSet.addBook(book);
+                books.remove(book);
+            }
+            sets.add(bookSet);
+        }
+        return sets;
     }
 
     private List<Book> getDistinctBooks(List<Book> books) {
@@ -71,19 +85,4 @@ public class BookStore {
         return distinctList;
     }
 
-    private double getQuantityDiscount(int numberOfBooks) {
-        double fullPrice = fullBookPrice * numberOfBooks;
-        switch (numberOfBooks){
-            case 5:
-                return .25 * fullPrice;
-            case 4:
-                return .20 * fullPrice;
-            case 3:
-                return .10 * fullPrice;
-            case 2:
-                return .05 * fullPrice;
-            default:
-                return 0;
-        }
-    }
 }

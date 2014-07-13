@@ -14,130 +14,162 @@ public class BookStoreTests {
     @Test
     public void oneBookShouldBeFullPrice(){
         List<Book> books = new ArrayList<Book>();
-        books.add(new Book("FirstBook", 1));
+        books.add(new Book(1));
         BookStore store = new BookStore();
         double price = store.purchaseBooks(books);
-        assertEquals(BookStore.fullBookPrice, price);
+        assertEquals(8.0, price);
     }
 
     @Test
     public void twoDifferentBooksShouldBeDiscounted(){
         List<Book> books = new ArrayList<Book>();
-        books.add(new Book("FirstBook", 1));
-        books.add(new Book("SecondBook", 2));
+        books.add(new Book(1));
+        books.add(new Book(2));
         BookStore store = new BookStore();
         double price = store.purchaseBooks(books);
-        double correctPrice = 1.9 * BookStore.fullBookPrice;
+        double correctPrice = 1.9 * 8.0;
         assertEquals(correctPrice, price);
     }
 
     @Test
     public void threeDifferentBooksShouldBeDiscounted(){
         List<Book> books = new ArrayList<Book>();
-        books.add(new Book("FirstBook", 1));
-        books.add(new Book("SecondBook", 2));
-        books.add(new Book("ThirdBook", 3));
+        books.add(new Book(1));
+        books.add(new Book(2));
+        books.add(new Book(3));
         BookStore store = new BookStore();
         double price = store.purchaseBooks(books);
-        double correctPrice = 2.7 * BookStore.fullBookPrice;
+        double correctPrice = 2.7 * 8.0;
         assertEquals(correctPrice, price);
     }
 
     @Test
     public void fourDifferentBooksShouldBeDiscounted(){
         List<Book> books = new ArrayList<Book>();
-        books.add(new Book("FirstBook", 1));
-        books.add(new Book("SecondBook", 2));
-        books.add(new Book("ThirdBook", 3));
-        books.add(new Book("FourthBook", 4));
+        books.add(new Book(1));
+        books.add(new Book(2));
+        books.add(new Book(3));
+        books.add(new Book(4));
         BookStore store = new BookStore();
         double price = store.purchaseBooks(books);
-        double correctPrice = 3.2 * BookStore.fullBookPrice;
+        double correctPrice = 3.2 * 8.0;
         assertEquals(correctPrice, price);
     }
 
     @Test
     public void fiveDifferentBooksShouldBeDiscounted(){
         List<Book> books = new ArrayList<Book>();
-        books.add(new Book("FirstBook", 1));
-        books.add(new Book("SecondBook", 2));
-        books.add(new Book("ThirdBook", 3));
-        books.add(new Book("FourthBook", 4));
-        books.add(new Book("FourthBook", 5));
+        books.add(new Book(1));
+        books.add(new Book(2));
+        books.add(new Book(3));
+        books.add(new Book(4));
+        books.add(new Book(5));
         BookStore store = new BookStore();
         double price = store.purchaseBooks(books);
-        double correctPrice = 3.75 * BookStore.fullBookPrice;
+        double correctPrice = 3.75 * 8.0;
         assertEquals(correctPrice, price);
     }
 
     @Test
     public void eightMixedBooksShouldReceivePartialDiscount(){
         List<Book> books = new ArrayList<Book>();
-        books.add(new Book("FirstBook", 1));
-        books.add(new Book("FirstBook", 1));
-        books.add(new Book("SecondBook", 2));
-        books.add(new Book("SecondBook", 2));
-        books.add(new Book("ThirdBook", 3));
-        books.add(new Book("ThirdBook", 3));
-        books.add(new Book("FourthBook", 4));
-        books.add(new Book("FifthBook", 5));
+        books.add(new Book(1));
+        books.add(new Book(1));
+        books.add(new Book(2));
+        books.add(new Book(2));
+        books.add(new Book(3));
+        books.add(new Book(3));
+        books.add(new Book(4));
+        books.add(new Book(5));
         BookStore store = new BookStore();
         double price = store.purchaseBooks(books);
-        double correctPrice = 6.4 * BookStore.fullBookPrice;
+        double correctPrice = 6.4 * 8.0;
         assertEquals(correctPrice, price);
     }
 
     @Test
     public void sixteenMixedBooksShouldReceivePartialDiscount(){
         List<Book> books = new ArrayList<Book>();
-        books.add(new Book("FirstBook", 1));
-        books.add(new Book("FirstBook", 1));
-        books.add(new Book("SecondBook", 2));
-        books.add(new Book("SecondBook", 2));
-        books.add(new Book("ThirdBook", 3));
-        books.add(new Book("ThirdBook", 3));
-        books.add(new Book("FourthBook", 4));
-        books.add(new Book("FifthBook", 5));
-        books.add(new Book("FirstBook", 1));
-        books.add(new Book("FirstBook", 1));
-        books.add(new Book("SecondBook", 2));
-        books.add(new Book("SecondBook", 2));
-        books.add(new Book("ThirdBook", 3));
-        books.add(new Book("ThirdBook", 3));
-        books.add(new Book("FourthBook", 4));
-        books.add(new Book("FifthBook", 5));
+        books.add(new Book(1));
+        books.add(new Book(1));
+        books.add(new Book(1));
+        books.add(new Book(1));
+        books.add(new Book(2));
+        books.add(new Book(2));
+        books.add(new Book(2));
+        books.add(new Book(2));
+        books.add(new Book(3));
+        books.add(new Book(3));
+        books.add(new Book(3));
+        books.add(new Book(3));
+        books.add(new Book(4));
+        books.add(new Book(4));
+        books.add(new Book(5));
+        books.add(new Book(5));
         BookStore store = new BookStore();
         double price = store.purchaseBooks(books);
-        double correctPrice = 12.8 * BookStore.fullBookPrice;
+        double correctPrice = 12.8 * 8.0;
         assertEquals(correctPrice, price);
     }
 
     @Test
     public void sixMixedBooksShouldReceivePartialDiscount(){
         List<Book> books = new ArrayList<Book>();
-        books.add(new Book("FirstBook", 1));
-        books.add(new Book("FirstBook", 1));
-        books.add(new Book("SecondBook", 2));
-        books.add(new Book("SecondBook", 2));
-        books.add(new Book("ThirdBook", 3));
-        books.add(new Book("FourthBook", 4));
+        books.add(new Book(1));
+        books.add(new Book(1));
+        books.add(new Book(2));
+        books.add(new Book(2));
+        books.add(new Book(3));
+        books.add(new Book(4));
         BookStore store = new BookStore();
         double price = store.purchaseBooks(books);
-        double correctPrice = 3.2 * BookStore.fullBookPrice + 1.9 * BookStore.fullBookPrice;
+        double correctPrice = 3.2 * 8.0 + 1.9 * 8.0;
         assertEquals(correctPrice, price);
     }
 
     @Test
     public void multipleEqualBooksShouldBeFullPrice(){
         List<Book> books = new ArrayList<Book>();
-        books.add(new Book("FirstBook", 1));
-        books.add(new Book("FirstBook", 1));
-        books.add(new Book("FirstBook", 1));
-        books.add(new Book("FirstBook", 1));
-        books.add(new Book("FirstBook", 1));
+        books.add(new Book(1));
+        books.add(new Book(1));
+        books.add(new Book(1));
+        books.add(new Book(1));
+        books.add(new Book(1));
         BookStore store = new BookStore();
         double price = store.purchaseBooks(books);
-        double correctPrice = books.size() * BookStore.fullBookPrice;
+        double correctPrice = 40.0;
+        assertEquals(correctPrice, price);
+    }
+
+    @Test
+    public void twentyThreeMixedShouldReceivePartialDiscount(){
+        List<Book> books = new ArrayList<Book>();
+        books.add(new Book(1));
+        books.add(new Book(1));
+        books.add(new Book(1));
+        books.add(new Book(1));
+        books.add(new Book(1));
+        books.add(new Book(2));
+        books.add(new Book(2));
+        books.add(new Book(2));
+        books.add(new Book(2));
+        books.add(new Book(2));
+        books.add(new Book(3));
+        books.add(new Book(3));
+        books.add(new Book(3));
+        books.add(new Book(3));
+        books.add(new Book(4));
+        books.add(new Book(4));
+        books.add(new Book(4));
+        books.add(new Book(4));
+        books.add(new Book(4));
+        books.add(new Book(5));
+        books.add(new Book(5));
+        books.add(new Book(5));
+        books.add(new Book(5));
+        BookStore store = new BookStore();
+        double price = store.purchaseBooks(books);
+        double correctPrice = 11.25 * 8.0 + 6.4 * 8.0;
         assertEquals(correctPrice, price);
     }
 }

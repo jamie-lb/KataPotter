@@ -1,11 +1,9 @@
 package books;
 
 public class Book {
-    private final String title;
     private final int id;
 
-    public Book(String bookTitle, int seriesId) {
-        title = bookTitle;
+    public Book(int seriesId) {
         id = seriesId;
     }
 
