@@ -25,11 +25,7 @@ public class BookStore {
         } else if (bookSets.size() == 2){
             BookSet first = bookSets.get(0);
             BookSet second = bookSets.get(1);
-            if (first.size() < 5 && second.size() < 5){
-                return false;
-            } else{
-                return Math.abs(first.size() - second.size()) >= 2;
-            }
+            return !(first.size() < 5 && second.size() < 5) && Math.abs(first.size() - second.size()) >= 2;
         } else{
             return true;
         }
